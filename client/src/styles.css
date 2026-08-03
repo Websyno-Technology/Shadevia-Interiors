@@ -60,6 +60,39 @@ input {
   margin-inline: auto;
 }
 
+.pre-nav {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 60;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem var(--page-x);
+  background: var(--deep-forest);
+  color: var(--white);
+  text-align: center;
+}
+
+.pre-nav p {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+.pre-nav a {
+  display: inline;
+  margin-left: 0.25rem;
+  color: var(--on-primary-container);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+  transition: color 150ms ease;
+}
+
+.pre-nav a:hover {
+  color: var(--white);
+}
 .top-nav {
   position: fixed;
   inset: 0 0 auto;
@@ -155,6 +188,8 @@ input {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  filter: blur(2px);
+  transform: scale(1.02);
 }
 
 .hero-overlay {
@@ -163,11 +198,7 @@ input {
   background: linear-gradient(90deg, rgba(0, 0, 0, 0.48), rgba(0, 0, 0, 0.05));
 }
 
-.hero-content {
-  position: relative;
-  z-index: 1;
-  color: var(--white);
-  padding-top: 5rem;
+$17.5rem;
 }
 
 .hero h1,
@@ -352,42 +383,6 @@ footer a {
   line-height: 1.6;
 }
 
-.partners {
-  padding-block: 6rem;
-  background: var(--surface-low);
-  border-block: 1px solid var(--linen-parchment);
-  text-align: center;
-}
-
-.partners p {
-  margin: 0 0 3rem;
-  color: var(--on-surface-variant);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-
-.partner-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2.5rem 4rem;
-  opacity: 0.65;
-  filter: grayscale(1);
-  transition: filter 180ms ease;
-}
-
-.partner-row:hover {
-  filter: grayscale(0);
-}
-
-.partner-row span {
-  color: var(--deep-forest);
-  font-family: Raleway, sans-serif;
-  font-size: 1.5rem;
-  font-weight: 600;
-}
 
 .why {
   display: grid;
@@ -664,4 +659,37 @@ footer .material-symbols-outlined {
     width: 100%;
   }
 }
+
+
+
+
+
+
+.credit-line {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.25rem;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.credit-line a {
+  display: inline-flex;
+  margin: 0;
+  color: var(--burnished-clay);
+  font-weight: 700;
+  line-height: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+  transition: color 150ms ease, opacity 150ms ease;
+}
+
+.credit-line a:hover {
+  color: var(--deep-forest);
+  opacity: 0.9;
+}
+
+
+
 

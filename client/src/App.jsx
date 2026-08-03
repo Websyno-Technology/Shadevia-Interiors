@@ -1,9 +1,10 @@
 ﻿import React, { useEffect } from 'react';
+import heroImage from './assets/image.png';
 
 const brandName = 'Shadevia Interiors';
 
 const images = {
-  hero: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCe5xiD8CqKaCR3CWwzHbjiyIivnmAZfXjtyMqyWHo3x0_874WesSsfBUssuv6kb1WVLp6TXypHfAl98DYo4BTmCJKFjV3u54FWJFj-GmDwajk-tAPV2IijcUDbJFfYmhSWQeEBEVMuYbZxoGx0uWkG0yrKmgu4G652mk4uKvg29cEZem240wX4v0e2SLWIH7EAI3zB0FOrr5m_JmN6_zNYcW7LKAF0ZmbBJLLBmAQFFJYNffkQ6vy-',
+  hero: heroImage,
   curtains: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCmTIu1VFtJjRHF2vHKVtlATrWfgkJvbLv_07yAkU2NrwNRjUhkIZDtClzUoPnkjy2MVkVHOpBF-GLj4w5ritIT50NnPaMCJl8m9fqBJC6p0KSCHv2sIndR7QrzXpV5TVG8P9K6HmvKrmVsO4UTXxvOyvVsgXPJ2Gty6xOecMiV9aiR0GF6NtSF5REqpJ1Bb7MmW6repmm9I5qnERDfYHnU0m9Uln1BBjzyaioEqbSIQgkneM_BXwLa',
   blinds: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA4gXxZHAZ8ivG96Bc1lY4fohnqgkjhphfXmnmxYy7SdKoYu6XZh12RY9KmS8qNn4FTSMfXIYswCqnrJz66jQbv8MfyXNR326F6LQyb4eEA5JHiF7AvuK74ZCQLCZ5qrfvNVFuV9JtqT6gakwRqh51ais_GxK33n9z4_qURdu5p6UQxashwdRhesMaKj2I-bMG19L1txNTT784B5NZ9FqlG57HjPiN9-8vZGsnXQFS9-MZ2_xk-9KH5',
   wallpaper: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDJgMOzXEKZXZw81h313upNkXXWtzgh2hQZgpFlI-p8tMre2MIuu-itTBfGVa0tVDPb8Bxc4lQezoqS4Gd2-A8GUp_FbKXKTlf_EwAcVwMLmoyGts8whnTVGrEEyANb1I8gj11mQQYGJuPk-6qfgKILdbQPq6hjbMCDEUROZLmsFrTV5QmuVmRwQ9adC8hW9JhzG7YlSCy1-a35Xs9gpXCOtnyZakVeNNu3JinlV_qcaHn_b2EuFYNP',
@@ -105,16 +106,6 @@ function App() {
           </div>
         </section>
 
-        <section className="partners" aria-label="Brand partners">
-          <div className="container">
-            <p>Collaborating with the world's finest makers</p>
-            <div className="partner-row">
-              {['HERITAGE', 'VELVET&CO', 'OAKWOOD', 'GLOSS.', 'MODERNIST'].map((partner) => (
-                <span key={partner}>{partner}</span>
-              ))}
-            </div>
-          </div>
-        </section>
 
         <section className="section container why" id="about">
           <div className="why-copy">
@@ -177,13 +168,13 @@ function App() {
           </div>
           <div>
             <h4>Contact</h4>
-            <p><Icon>location_on</Icon> 123 Design District, London</p>
-            <p><Icon>mail</Icon> hello@shadeviainteriors.com</p>
-            <p><Icon>call</Icon> +44 20 7946 0123</p>
+            <p><Icon>location_on</Icon> We will notify you soon.</p>
+            <p><Icon>mail</Icon> info@shadeviainteriors.in</p>
+            <p><Icon>call</Icon> 99902 23099</p>
           </div>
         </div>
         <div className="container footer-bottom">
-          <p>© 2026 Shadevia Interiors. Crafted for timeless elegance.</p>
+         <p className="credit-line">© 2026 Shadevia Interiors. Under development by <a href="https://www.websyno.in/" target="_blank" rel="noreferrer">Websyno Technologies</a>.</p>
           <div className="socials">
             <a href="#home" aria-label="Share"><Icon>share</Icon></a>
             <a href="#home" aria-label="Instagram"><Icon>camera</Icon></a>
@@ -196,6 +187,13 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
+
+
 
 
 
