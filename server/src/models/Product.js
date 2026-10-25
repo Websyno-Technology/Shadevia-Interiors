@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
+const { categoryIds, areAllowedTags } = require('../config/catalog');
 
 const productSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, trim: true, maxlength: 120 },
     description: { type: String, trim: true, maxlength: 1000, default: '' },
-    category: { type: String, required: true, trim: true, lowercase: true, maxlength: 60 },
-    tags: { type: [String], default: [], validate: { validator: (tags) => tags.length <= 12, message: 'A product can have a maximum of 12 tags.' } },
+    category: { type: String, required: true, trim: true, lowercase: true, enum: { values: categoryIds, message: 'Choose a valid category.' } },
+    tags: { type: [String], default: [], validate: { validator: (tags) => tags.length <= 12 && areAllowedTags(tags), message: 'Choose valid tags from the catalog configuration.' } },
     price: { type: Number, required: true, min: 0 },
     images: {
       type: [String],
