@@ -1,0 +1,20 @@
+categories:
+  - id: curtains
+    label: Curtains
+  - id: blinds
+    label: Blinds
+  - id: wallpaper
+    label: Wallpaper
+  - id: flooring
+    label: Flooring
+  - id: other
+    label: Other
+
+tags:
+  - limited time deal
+  - new arrival
+  - bestseller
+  - handmade
+  - premium
+  - custom made
+  - fresh stock

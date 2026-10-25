@@ -1,5 +1,6 @@
 const Product = require('../models/Product');
 const { cloudinary, isCloudinaryConfigured } = require('../config/cloudinary');
+const { isAllowedCategory, areAllowedTags } = require('../config/catalog');
 
 const uploadToCloudinary = (file) => new Promise((resolve, reject) => {
   const stream = cloudinary.uploader.upload_stream(
@@ -45,7 +46,11 @@ const getManagedProducts = async (req, res, next) => {
 const createProduct = async (req, res, next) => {
   try {
     const { name, description, price, category, tags } = req.body;
-    if (!name || price === undefined || !category) return res.status(400).json({ message: 'Product name, price, and category are required.' });
+    const normalizedCategory = String(category || '').trim().toLowerCase();
+    const normalizedTags = String(tags || '').split(',').map((tag) => tag.trim().toLowerCase()).filter(Boolean);
+    if (!name?.trim() || price === undefined || !category?.trim() || !description?.trim()) return res.status(400).json({ message: 'Product name, price, category, and description are required.' });
+    if (!isAllowedCategory(normalizedCategory)) return res.status(400).json({ message: 'Choose a category from the approved list.' });
+    if (normalizedTags.length > 12 || !areAllowedTags(normalizedTags)) return res.status(400).json({ message: 'Choose tags from the approved list.' });
     if (!req.files?.length) return res.status(400).json({ message: 'Upload at least one product image.' });
     if (!isCloudinaryConfigured()) return res.status(500).json({ message: 'Cloudinary is not configured on the server.' });
 
@@ -55,8 +60,8 @@ const createProduct = async (req, res, next) => {
       name,
       description,
       price: Number(price),
-      category: category.toLowerCase(),
-      tags: String(tags || '').split(',').map((tag) => tag.trim().toLowerCase()).filter(Boolean),
+      category: normalizedCategory,
+      tags: normalizedTags,
       images,
       createdBy: req.user.id
     });
@@ -71,8 +76,29 @@ const updateProduct = async (req, res, next) => {
     const product = await Product.findOne({ _id: req.params.productId, createdBy: req.user.id });
     if (!product) return res.status(404).json({ message: 'Product not found.' });
 
-    const { price, isVisible, stockStatus } = req.body;
-    if (price !== undefined) product.price = Number(price);
+    const { name, description, price, category, tags, isVisible, stockStatus } = req.body;
+    if (name !== undefined) {
+      if (!String(name).trim()) return res.status(400).json({ message: 'Product name is required.' });
+      product.name = String(name).trim();
+    }
+    if (description !== undefined) {
+      if (!String(description).trim()) return res.status(400).json({ message: 'Product description is required.' });
+      product.description = String(description).trim();
+    }
+    if (price !== undefined) {
+      if (!Number.isFinite(Number(price)) || Number(price) < 0) return res.status(400).json({ message: 'Enter a valid price.' });
+      product.price = Number(price);
+    }
+    if (category !== undefined) {
+      const normalizedCategory = String(category).trim().toLowerCase();
+      if (!isAllowedCategory(normalizedCategory)) return res.status(400).json({ message: 'Choose a category from the approved list.' });
+      product.category = normalizedCategory;
+    }
+    if (tags !== undefined) {
+      const normalizedTags = Array.isArray(tags) ? tags.map((tag) => String(tag).trim().toLowerCase()).filter(Boolean) : [];
+      if (normalizedTags.length > 12 || !areAllowedTags(normalizedTags)) return res.status(400).json({ message: 'Choose tags from the approved list.' });
+      product.tags = normalizedTags;
+    }
     if (typeof isVisible === 'boolean') product.isVisible = isVisible;
     if (['in_stock', 'out_of_stock'].includes(stockStatus)) product.stockStatus = stockStatus;
 
@@ -83,4 +109,14 @@ const updateProduct = async (req, res, next) => {
   }
 };
 
-module.exports = { getProducts, getManagedProducts, createProduct, updateProduct };
+const deleteProduct = async (req, res, next) => {
+  try {
+    const product = await Product.findOneAndDelete({ _id: req.params.productId, createdBy: req.user.id });
+    if (!product) return res.status(404).json({ message: 'Product not found.' });
+    return res.status(204).send();
+  } catch (error) {
+    return next(error);
+  }
+};
+
+module.exports = { getProducts, getManagedProducts, createProduct, updateProduct, deleteProduct };
